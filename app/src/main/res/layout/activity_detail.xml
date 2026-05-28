@@ -67,9 +67,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgDetailAvatar"
-        tools:text="George Bluth" />
+        tools:text="Leanne Graham" />
 
-    <!-- Detailed Info Panel ScrollView (scrollable if needed) -->
+    <!-- Detailed Info Panel ScrollView -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ID Item -->
+            <!-- ID / Username Item -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="USER ID"
+                    android:text="USER DETAILS"
                     android:textColor="@color/primary_cyan"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -107,7 +107,7 @@
                     android:layout_marginTop="4dp"
                     android:textColor="@color/text_white"
                     android:textSize="16sp"
-                    tools:text="#1" />
+                    tools:text="ID: #1 (username: Bret)" />
             </LinearLayout>
 
             <!-- Email Item -->
@@ -134,10 +134,10 @@
                     android:layout_marginTop="4dp"
                     android:textColor="@color/text_white"
                     android:textSize="16sp"
-                    tools:text="george.bluth@reqres.in" />
+                    tools:text="Sincere@april.biz" />
             </LinearLayout>
 
-            <!-- First Name Item -->
+            <!-- Phone Item -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,22 +149,76 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FIRST NAME"
+                    android:text="PHONE NUMBER"
                     android:textColor="@color/primary_cyan"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtDetailFirstName"
+                    android:id="@+id/txtDetailPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/text_white"
                     android:textSize="16sp"
-                    tools:text="George" />
+                    tools:text="1-770-736-8031 x56442" />
             </LinearLayout>
 
-            <!-- Last Name Item -->
+            <!-- Website Item -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WEBSITE"
+                    android:textColor="@color/primary_cyan"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDetailWebsite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_white"
+                    android:textSize="16sp"
+                    tools:text="hildegard.org" />
+            </LinearLayout>
+
+            <!-- Address Item -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADDRESS"
+                    android:textColor="@color/primary_cyan"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDetailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_white"
+                    android:textSize="16sp"
+                    tools:text="Apt. 556, Kulas Light, Gwenborough, 92998-3874" />
+            </LinearLayout>
+
+            <!-- Company Item -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -176,19 +230,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LAST NAME"
+                    android:text="COMPANY"
                     android:textColor="@color/primary_cyan"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtDetailLastName"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtDetailCompany"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/text_white"
                     android:textSize="16sp"
-                    tools:text="Bluth" />
+                    tools:text="Romaguera-Crona\n&quot;Multi-layered client-server neural-net&quot;" />
             </LinearLayout>
 
         </LinearLayout>

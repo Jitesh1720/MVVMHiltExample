@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     alias(libs.plugins.hilt.android)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.glide)
+    implementation(libs.okhttp.logging)
     
     // Hilt
     implementation(libs.hilt.android)

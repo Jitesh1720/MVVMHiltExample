@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DemoKotlinApp"
+rootProject.name = "MVVMHiltExample"
 include(":app")
  

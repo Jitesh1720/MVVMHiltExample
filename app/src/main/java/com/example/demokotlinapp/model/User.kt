@@ -1,23 +1,42 @@
 package com.example.demokotlinapp.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
-data class UserResponse(
-    @SerializedName("page") val page: Int,
-    @SerializedName("per_page") val perPage: Int,
-    @SerializedName("total") val total: Int,
-    @SerializedName("total_pages") val totalPages: Int,
-    @SerializedName("data") val data: List<User>
-) : Serializable
-
+@Parcelize
 data class User(
     @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String,
+    @SerializedName("username") val username: String,
     @SerializedName("email") val email: String,
-    @SerializedName("first_name") val firstName: String,
-    @SerializedName("last_name") val lastName: String,
-    @SerializedName("avatar") val avatar: String
-) : Serializable {
-    val fullName: String
-        get() = "$firstName $lastName"
+    @SerializedName("address") val address: Address,
+    @SerializedName("phone") val phone: String,
+    @SerializedName("website") val website: String,
+    @SerializedName("company") val company: Company
+) : Parcelable {
+    val avatarUrl: String
+        get() = "https://robohash.org/${username}.png?size=200x200&set=set4"
 }
+
+@Parcelize
+data class Address(
+    @SerializedName("street") val street: String,
+    @SerializedName("suite") val suite: String,
+    @SerializedName("city") val city: String,
+    @SerializedName("zipcode") val zipcode: String,
+    @SerializedName("geo") val geo: Geo
+) : Parcelable
+
+@Parcelize
+data class Geo(
+    @SerializedName("lat") val lat: String,
+    @SerializedName("lng") val lng: String
+) : Parcelable
+
+@Parcelize
+data class Company(
+    @SerializedName("name") val name: String,
+    @SerializedName("catchPhrase") val catchPhrase: String,
+    @SerializedName("bs") val bs: String
+) : Parcelable

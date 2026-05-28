@@ -1,7 +1,7 @@
 package com.example.demokotlinapp.data.repository
 
-import com.example.demokotlinapp.model.UserResponse
+import com.example.demokotlinapp.model.User
 
 interface UserRepository {
-    suspend fun getUsers(page: Int): UserResponse
+    suspend fun getUsers(): List<User>
 }

@@ -4,11 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.demokotlinapp.databinding.ItemUserBinding
 import com.example.demokotlinapp.model.User
 import java.util.Locale
-
 import com.example.demokotlinapp.extensions.loadCircular
 
 class UserAdapter(
@@ -32,8 +30,7 @@ class UserAdapter(
             originalList
         } else {
             originalList.filter {
-                it.firstName.lowercase(Locale.getDefault()).contains(cleanQuery) ||
-                it.lastName.lowercase(Locale.getDefault()).contains(cleanQuery) ||
+                it.name.lowercase(Locale.getDefault()).contains(cleanQuery) ||
                 it.email.lowercase(Locale.getDefault()).contains(cleanQuery)
             }
         }
@@ -54,7 +51,6 @@ class UserAdapter(
         val user = filteredList[position]
         holder.bind(user)
         
-        // Add a micro-animation on item appearance for premium feel
         holder.itemView.animation = AnimationUtils.loadAnimation(
             holder.itemView.context,
             android.R.anim.fade_in
@@ -69,9 +65,9 @@ class UserAdapter(
 
         fun bind(user: User) {
             binding.apply {
-                txtUserName.text = user.fullName
+                txtUserName.text = user.name
                 txtUserEmail.text = user.email
-                imgAvatar.loadCircular(user.avatar)
+                imgAvatar.loadCircular(user.avatarUrl)
                 root.setOnClickListener { onItemClick(user) }
             }
         }

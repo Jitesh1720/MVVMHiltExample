@@ -23,12 +23,11 @@ class DetailActivity : AppCompatActivity() {
             finish()
         }
 
-        // Safe retrieve user extra and bind details using scope functions
         val user = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("EXTRA_USER", User::class.java)
+            intent.getParcelableExtra("EXTRA_USER", User::class.java) // 1
         } else {
             @Suppress("DEPRECATION")
-            intent.getSerializableExtra("EXTRA_USER") as? User
+            intent.getParcelableExtra("EXTRA_USER") as? User // 2
         }
 
         user?.let { populateDetails(it) } ?: finish()
@@ -36,12 +35,14 @@ class DetailActivity : AppCompatActivity() {
 
     private fun populateDetails(user: User) {
         binding.apply {
-            txtDetailName.text = user.fullName
-            txtDetailId.text = "#${user.id}"
+            txtDetailName.text = user.name
+            txtDetailId.text = "ID: #${user.id} (username: ${user.username})"
             txtDetailEmail.text = user.email
-            txtDetailFirstName.text = user.firstName
-            txtDetailLastName.text = user.lastName
-            imgDetailAvatar.loadCircular(user.avatar)
+            txtDetailPhone.text = user.phone
+            txtDetailWebsite.text = user.website
+            txtDetailAddress.text = "${user.address.suite}, ${user.address.street}, ${user.address.city}, ${user.address.zipcode}"
+            txtDetailCompany.text = "${user.company.name}\n\"${user.company.catchPhrase}\""
+            imgDetailAvatar.loadCircular(user.avatarUrl)
         }
     }
 }

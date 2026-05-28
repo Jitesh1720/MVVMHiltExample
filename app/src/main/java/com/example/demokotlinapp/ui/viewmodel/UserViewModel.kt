@@ -30,8 +30,8 @@ class UserViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val response = userRepository.getUsers(page = 1)
-                _users.value = response.data
+                val response = userRepository.getUsers()
+                _users.value = response
             } catch (e: Exception) {
                 _errorMessage.value = e.localizedMessage ?: "Failed to fetch users"
                 _users.value = emptyList()
