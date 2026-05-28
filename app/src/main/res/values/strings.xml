@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DemoKotlinApp</string>
+    <string name="user_detail">User Details</string>
+    <string name="search_hint">Search users by name...</string>
+    <string name="error_failed_to_fetch">Failed to load users. Please check your connection.</string>
+    <string name="empty_state_text">No users found</string>
+</resources>
