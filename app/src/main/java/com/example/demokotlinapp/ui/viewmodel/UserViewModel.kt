@@ -10,33 +10,29 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+sealed class UserUiState {
+    object Loading : UserUiState()
+    data class Success(val users: List<User>) : UserUiState()
+    data class Error(val message: String) : UserUiState()
+}
+
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val _users = MutableLiveData<List<User>>()
-    val users: LiveData<List<User>> get() = _users
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
-
-    private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> get() = _errorMessage
+    private val _uiState = MutableLiveData<UserUiState>()
+    val uiState: LiveData<UserUiState> get() = _uiState
 
     fun fetchUsers() {
-        _isLoading.value = true
-        _errorMessage.value = null
+        _uiState.value = UserUiState.Loading
 
         viewModelScope.launch {
             try {
                 val response = userRepository.getUsers()
-                _users.value = response
+                _uiState.value = UserUiState.Success(response)
             } catch (e: Exception) {
-                _errorMessage.value = e.localizedMessage ?: "Failed to fetch users"
-                _users.value = emptyList()
-            } finally {
-                _isLoading.value = false
+                _uiState.value = UserUiState.Error(e.localizedMessage ?: "Failed to fetch users")
             }
         }
     }

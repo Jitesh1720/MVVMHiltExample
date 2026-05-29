@@ -7,12 +7,18 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.demokotlinapp.databinding.ActivityMainBinding
 import com.example.demokotlinapp.extensions.gone
 import com.example.demokotlinapp.extensions.visible
+import com.example.demokotlinapp.ui.viewmodel.UserUiState
 import com.example.demokotlinapp.ui.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -20,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var userAdapter: UserAdapter
     private val userViewModel: UserViewModel by viewModels()
+    private val searchQuery = MutableStateFlow("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,33 +63,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun setupSearch() {
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                userAdapter.filter(s?.toString().orEmpty())
+                searchQuery.value = s?.toString().orEmpty()
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        lifecycleScope.launch {
+            searchQuery
+                .debounce(300) // 300ms debounce
+                .collect { query ->
+                    userAdapter.filter(query)
+                }
+        }
     }
 
     private fun observeViewModel() {
-        userViewModel.apply {
-            users.observe(this@MainActivity) { list ->
-                userAdapter.submitList(list)
-            }
-
-            isLoading.observe(this@MainActivity) { loading ->
-                binding.progressBar.apply {
-                    if (loading) visible() else gone()
+        userViewModel.uiState.observe(this@MainActivity) { state ->
+            when (state) {
+                is UserUiState.Loading -> {
+                    binding.progressBar.visible()
                 }
-            }
-
-            errorMessage.observe(this@MainActivity) { error ->
-                error?.let {
-                    Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
+                is UserUiState.Success -> {
+                    binding.progressBar.gone()
+                    userAdapter.submitList(state.users)
+                }
+                is UserUiState.Error -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(this@MainActivity, state.message, Toast.LENGTH_LONG).show()
                 }
             }
         }
