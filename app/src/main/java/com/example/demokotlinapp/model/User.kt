@@ -2,6 +2,7 @@ package com.example.demokotlinapp.model
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -19,6 +20,7 @@ data class User(
     @SerializedName("website") val website: String,
     @SerializedName("company") val company: Company
 ) : Parcelable {
+    @Ignore
     val avatarUrl: String
         get() = "https://robohash.org/${username}.png?size=200x200&set=set4"
 }
